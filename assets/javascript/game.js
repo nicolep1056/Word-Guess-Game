@@ -14,7 +14,7 @@ var kennyBall = ["assets/images/kenny_1.jpg", "assets/images/kenny_2.jpg", "asse
 var counter = 0
 
 function startGame() {
-    gameWon=false;
+    gameWon = false;
     numGuesses = 12;
     chosenWord = wordsToPick[Math.floor(Math.random() * wordsToPick.length)];
     lettersInWord = chosenWord.split("");
@@ -27,7 +27,7 @@ function startGame() {
     }
     document.querySelector("#guesses-remaining").innerHTML = numGuesses;
     document.querySelector("#wrong-guesses").innerHTML = alreadyGuessed;
-    document.querySelector(".kenny").innerHTML =  `<img src="assets/images/kenny_1.jpg" alt="Kenny 1">`
+    document.querySelector(".kenny").innerHTML = `<img src="assets/images/kenny_1.jpg" alt="Kenny 1">`
 
 }
 
@@ -63,41 +63,41 @@ function checkLetters(letter) {
 function wordGuessed() {
 
     console.log("WinCount: " + numWins + " | LossCount: " + numLosses + " | NumGuesses: " + numGuesses);
-  
+
     document.querySelector("#guesses-remaining").innerHTML = numGuesses;
     document.querySelector("#word-blanks").innerHTML = blanksAndLetters.join(" ");
     document.querySelector("#already-guessed").innerHTML = alreadyGuessed.join(" ");
-  
+
     if (lettersInWord.toString() === blanksAndLetters.toString()) {
-      numWins++;
-      gameWon = true;
-      document.querySelector("#win-counter").innerHTML = numWins;
+        numWins++;
+        gameWon = true;
+        document.querySelector("#win-counter").innerHTML = numWins;
     }
-  
+
     else if (numGuesses === 0) {
-      numLosses++;
-        document.querySelector(".kenny").innerHTML =  `<img src="assets/images/kenny_dead.jpg" alt="Kenny dead">`;
-        alert ("you lose.");
-  
-      document.querySelector("#loss-counter").innerHTML = numLosses;
+        numLosses++;
+        document.querySelector(".kenny").innerHTML = `<img src="assets/images/kenny_dead.jpg" alt="Kenny dead">`;
+        alert("you lose.");
+
+        document.querySelector("#loss-counter").innerHTML = numLosses;
     }
-  
-  }
-  
+
+}
+
 startGame();
 
 
-document.onkeyup = function(event) {
+document.onkeyup = function (event) {
     if (numGuesses === 0 || gameWon) {
         startGame();
     }
-    else
-    {
-  var letterGuessed = String.fromCharCode(event.keyCode).toLowerCase();
- 
-  checkLetters(letterGuessed);
-  wordGuessed();}
-  //else if... //if letterGuessed is an element of alphabet array 
-  //then run checkLetters
-  //else alert user please press letter
+    else {
+        var letterGuessed = String.fromCharCode(event.keyCode).toLowerCase();
+
+        checkLetters(letterGuessed);
+        wordGuessed();
+    }
+    //else if... //if letterGuessed is an element of alphabet array 
+    //then run checkLetters
+    //else alert user please press letter
 };
