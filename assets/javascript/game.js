@@ -1,4 +1,5 @@
-var wordsToPick = ["frog", "rabbit", "sheep", "snake"];
+var gameWon;
+var wordsToPick = ["cartman", "kyle", "stan", "kenny", "chef", "towlie", "jimmy", "timmy", "colorado", "authoritah"];
 var chosenWord = "";
 var lettersInWord = [];
 var numBlanks = 0;
@@ -9,7 +10,11 @@ var numWins = 0;
 var numLosses = 0;
 var numGuesses = 12;
 
+var kennyBall = ["assets/images/kenny_1.jpg", "assets/images/kenny_2.jpg", "assets/images/kenny_3.jpg"];
+var counter = 0
+
 function startGame() {
+    gameWon=false;
     numGuesses = 12;
     chosenWord = wordsToPick[Math.floor(Math.random() * wordsToPick.length)];
     lettersInWord = chosenWord.split("");
@@ -22,6 +27,7 @@ function startGame() {
     }
     document.querySelector("#guesses-remaining").innerHTML = numGuesses;
     document.querySelector("#wrong-guesses").innerHTML = alreadyGuessed;
+    document.querySelector(".kenny").innerHTML =  `<img src="assets/images/kenny_1.jpg" alt="Kenny 1">`
 
 }
 
@@ -47,6 +53,11 @@ function checkLetters(letter) {
     else {
         alreadyGuessed.push(letter);
         numGuesses--;
+        document.querySelector(".kenny").innerHTML = '<img src="' + kennyBall[counter] + '" alt="kenny">';
+        counter++;
+        if (counter === 3) {
+            counter = 0;
+        }
     }
 }
 function wordGuessed() {
@@ -59,26 +70,34 @@ function wordGuessed() {
   
     if (lettersInWord.toString() === blanksAndLetters.toString()) {
       numWins++;
-      alert("You won!");
-  
+      gameWon = true;
       document.querySelector("#win-counter").innerHTML = numWins;
-      startGame();
     }
   
     else if (numGuesses === 0) {
       numLosses++;
-      alert("You lose");
+        document.querySelector(".kenny").innerHTML =  `<img src="assets/images/kenny_dead.jpg" alt="Kenny dead">`;
+        alert ("you lose.");
   
       document.querySelector("#loss-counter").innerHTML = numLosses;
-      startGame();
     }
   
   }
   
 startGame();
 
+
 document.onkeyup = function(event) {
+    if (numGuesses === 0 || gameWon) {
+        startGame();
+    }
+    else
+    {
   var letterGuessed = String.fromCharCode(event.keyCode).toLowerCase();
+ 
   checkLetters(letterGuessed);
-  wordGuessed();
+  wordGuessed();}
+  //else if... //if letterGuessed is an element of alphabet array 
+  //then run checkLetters
+  //else alert user please press letter
 };
